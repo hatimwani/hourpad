@@ -1,0 +1,846 @@
+{% load static %}
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hourpad</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'assets/css/tailwind.output.css' %}" />
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+      defer
+    ></script>
+    <script src="{% static 'assets/js/init-alpine.js' %}"></script>
+
+    <script src="{% static 'app3.js' %}" defer></script>
+  </head>
+  <body>
+    <div
+      class="flex h-screen bg-gray-100 dark:bg-gray-900;"
+      :class="{ 'overflow-hidden': isSideMenuOpen}"
+    >
+      <!-- Desktop sidebar -->
+      <aside
+        style="border-right: 1px solid #ccc; width: 180px"
+        class="z-20 flex-shrink-0 hidden w-55 bg-white overflow-y-auto dark:bg-gray-800 md:block"
+      >
+        <div class="py-4 text-gray-600 dark:text-gray-400">
+          <a
+            style="width: 100%"
+            class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
+            href="#"
+          >
+          Hourpad
+          </a>
+          <ul>
+            <li class="relative mt-6 px-6 py-3">
+              <a
+                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                href="{% url 'index' %}"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1"
+                  viewBox="0 0 16 16"
+                  stroke="currentColor"
+                >
+                <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5V5.6z"/>
+                <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64a.715.715 0 0 1 .012-.013l.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354a.512.512 0 0 1-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3z"/>
+                 
+                </svg>
+                <span class="ml-4">Schedule</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+                <span
+                    class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                    aria-hidden="true"
+                ></span>
+                <a
+                    class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                    href="#"
+                >
+                    <svg
+                    class="w-5 h-5"
+                    aria-hidden="true"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="0.8"
+                    viewBox="0 0 16 16"
+                    stroke="currentColor"
+                    >
+                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"/>
+                    <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4zM11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+                
+                    </svg>
+                    <span class="ml-4">Timebook</span>
+                </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a
+                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                href="{% url 'manage' %}"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                  ></path>
+                </svg>
+                <span class="ml-4">Manage</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a
+                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                href="{% url 'logout' %}"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1"
+                  viewBox="0 0 16 16"
+                  stroke="currentColor"
+                >
+                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"/>
+              <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4zM11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+            
+                </svg>
+                <span class="ml-4">Logout</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+      <!-- Mobile sidebar -->
+      <!-- Backdrop -->
+      <div
+        x-show="isSideMenuOpen"
+        x-transition:enter="transition ease-in-out duration-150"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in-out duration-150"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"
+      ></div>
+      <aside
+        class="fixed inset-y-0 z-20 flex-shrink-0 w-64 mt-16 overflow-y-auto bg-white dark:bg-gray-800 md:hidden"
+        x-show="isSideMenuOpen"
+        x-transition:enter="transition ease-in-out duration-150"
+        x-transition:enter-start="opacity-0 transform -translate-x-20"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in-out duration-150"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0 transform -translate-x-20"
+        @click.away="closeSideMenu"
+        @keydown.escape="closeSideMenu"
+      >
+        <div class="py-4 text-gray-500 dark:text-gray-400">
+          <a
+            class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
+            href="#"
+          >
+          Hourpad
+          </a>
+          <ul>
+
+            <li class="relative mt-6 px-6 py-3">
+                <a
+                  class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                  href="{% url 'index' %}"
+                >
+                  <svg
+                    class="w-5 h-5"
+                    aria-hidden="true"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1"
+                    viewBox="0 0 16 16"
+                    stroke="currentColor"
+                  >
+                  <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5V5.6z"/>
+                  <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64a.715.715 0 0 1 .012-.013l.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354a.512.512 0 0 1-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3z"/>
+                   
+                  </svg>
+                  <span class="ml-4">Schedule</span>
+                </a>
+            </li>
+            <li class="relative px-6 py-3">
+                  <span
+                      class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                      aria-hidden="true"
+                  ></span>
+                  <a
+                      class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                      href="#"
+                  >
+                      <svg
+                      class="w-5 h-5"
+                      aria-hidden="true"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="0.8"
+                      viewBox="0 0 16 16"
+                      stroke="currentColor"
+                      >
+                      <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"/>
+                      <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4zM11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+                  
+                      </svg>
+                      <span class="ml-4">Timebook</span>
+                  </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a
+                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                href="{% url 'manage' %}"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                  ></path>
+                </svg>
+                <span class="ml-4">Manage</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a
+                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                href="{% url 'logout' %}"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1"
+                  viewBox="0 0 16 16"
+                  stroke="currentColor"
+                >
+                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"/>
+              <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4zM11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+            
+                </svg>
+                <span class="ml-4">Logout</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+      <div class="flex flex-col flex-1 w-full">
+        <header   class="z-10 border py-3 bg-white shadow-md dark:bg-gray-800">
+          <div class="container flex items-center justify-between h-full px-4 mx-auto text-purple-600 dark:text-purple-300">
+            <div id="header" class="grid md:grid-cols-2 w-full">
+             
+              <!-- Search input -->
+              <div class="w-full flex justify-center flex-1  lg:mr-32">
+                <!-- Mobile hamburger -->
+                <button
+                  class="p-1 mr-2 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
+                  @click="toggleSideMenu"
+                  aria-label="Menu"
+                >
+                  <svg
+                    class="w-6 h-6"
+                    aria-hidden="true"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+                <input
+                  style="height:40px" maxlength=80
+                  class="w-full text-lg text-gray-800  placeholder-gray-600  border-0 dark:bg-gray-800  dark:placeholder-gray-500   dark:text-gray-200 focus:placeholder-gray-500 focus:outline-none  "
+                  type="text"
+                  placeholder="What are you working on..."
+                  aria-label="Task"
+                />
+              </div>
+
+              <div class="flex justify-center flex-1  ">
+                <div id="stopWatch" style="margin-left: -15px; font-size: 22px; padding-top: 5px" class="px-2   text-gray-500 dark:text-gray-200">0:00</div>
+                <div class="flex py-1">
+                  <label 
+                  style="border-radius: 10px; padding-left: 3px; padding-right: 8px;"
+                  class="flex items-center bg-green-100 t dark:bg-green-700  mr-1"
+                  >
+                    <input
+                      type="checkbox"
+                      class="text-green-700 form-checkbox  focus:outline-none"
+                    />
+                    <span
+                      style="margin-left: 5px"
+                      class="text-green-700  dark:text-green-100 "
+                    >
+                      Important
+                    </span>
+                  </label>
+                  <label 
+                  style="border-radius: 10px; padding-left: 3px; padding-right: 8px"
+                  class="flex items-center bg-red-100  dark:bg-red-700 dark:text-red-100 text-red-700  mr-2">
+                    <input
+                      type="checkbox"
+                      class="text-red-700 form-checkbox "
+                    />
+                    <span
+                      style="margin-left: 5px"
+                      class=""
+                    >
+                      Urgent
+                    </span>
+                  </label>
+                </div>
+
+                <!-- This example requires Tailwind CSS v2.0+ -->
+                <div class="relative inline-block text-left">
+                  <div style="padding-top:7px" class=" mr-2 ">
+                    <button class="align-middle  focus:outline-none" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                      <svg  width="27" height="27" fill="#555"  viewBox="0 0 16 16">
+                        <path d="M2 1a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l4.586-4.586a1 1 0 0 0 0-1.414l-7-7A1 1 0 0 0 6.586 1H2zm4 3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                      </svg>
+                    </button>
+                  </div>
+
+                    <ul
+                      style="border-radius:10px"
+                      id="activities"
+                      class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-lg shadow-xl dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700"
+                      aria-label="activities"
+                      hidden
+                    >
+                      <li class="flex">
+                        <label class="block  text-sm">
+                          <div
+                            class="relative text-purple-600 "
+                          >
+                            <input
+                              style="height: 30px; background: #fef2f2"
+                              class="w-full pl-2 ml-1 bg-gray-100 pr-10 text-sm text-gray-700 placeholder-gray-600  border-0 rounded-md dark:placeholder-gray-500  dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500  focus:outline-none "
+                              type="text"
+                              placeholder="Add a new activity"
+                              aria-label="Activity"
+                              id="newActivity"
+                            />
+                            <button
+                              id="addActivityButton"
+                              style="background: #fb7185"
+                              class="absolute inset-y-0 right-0 px-1 leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                            >
+                            <svg width="22" height="22" fill="currentColor"  viewBox="0 0 16 16">
+                              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                            </svg>
+                            </button>
+                          </div>
+                        </label>
+                      </li>
+                      {% for activity in activities %}
+                        <li class="flex">
+                          <label class="flex ml-2 activityItem items-center dark:text-gray-400">
+                            <input
+                              type="checkbox"
+                              class="text-purple-600 activity form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            />
+                            <span  class="ml-2 activityName">{{activity.name}}</span>
+                          </label>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                </div>
+
+
+                <div>
+                  <button
+                    id="headPlayButton"
+                    style="background: #f472b6; border-radius: 25px; padding-left:6px; padding-right:4px; border: 5px solid #fce7f3"
+                    class="px-1 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                  >
+                  <svg width="22" height="22" fill="currentColor"  viewBox="0 0 16 16">
+                    <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                  </svg>
+                  </button>
+                  <button
+                    id="stopButton"
+                    style="background: #f472b6; border-radius: 25px; padding-left:5px; padding-right:5px; border: 5px solid #fce7f3; display:none"
+                    class="px-1 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                  >
+                  <svg width="22" height="22" fill="currentColor"  viewBox="0 0 16 16">
+                    <path d="M5 3.5h6A1.5 1.5 0 0 1 12.5 5v6a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 11V5A1.5 1.5 0 0 1 5 3.5z"/>
+                  </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+        <main class="h-full pb-8 overflow-y-auto" id="main" style="display:none">
+          <div class="container px-6 grid mx-auto">
+            <div style="padding-top:17px" class=" mr-2 grid md:grid-cols-2 ">
+              <div class="px-0">
+                <button style="background:#e0e7ff; color:#4338ca;border-radius: 8px; padding-top: 2px; padding-botton: 4px" class="px-2 align-middle focus:outline-none" id="schedule-menu-button" aria-expanded="true" aria-haspopup="true">
+                  <h2
+                    class=" text-2xl inline-flex ml-1 font-semibold "
+                  >
+                      Timebook
+                  </h2>
+                </button>
+              </div>
+              <div style="margin-top:2px">
+                <button style="border-radius: 8px;" id="modalButton" @click="openModal" class="align-middle text-orange-700 bg-orange-100  dark:text-white dark:bg-orange-600  px-2 py-1 focus:outline-none" id="schedule-menu-button" aria-expanded="true" aria-haspopup="true">
+                  <h4
+                    class=" text-lg inline-flex font-semibold "
+                  >
+                  Add New<svg style="margin-top:2px;" class="dark:text-gray-400 -mr-1 ml-2 h-6 w-6 border bg-white rounded-md" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                  </h4>
+                </button>
+              </div>
+            </div>
+            <div class="w-full mb-8 mt-4 overflow-hidden rounded-lg shadow-xs ">
+              <div class="w-full overflow-x-auto">
+                <table class="w-full whitespace-no-wrap ">
+                  <tbody
+                    id="scheduleList"
+                    class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
+                  >
+                    {% for task in tasks %}
+                    <tr class="text-gray-700 dark:text-gray-400 bg-gray-100 dark:bg-gray-900  startDate pl-20">
+                      <td style="" class="font-semibold py-3 px-10">{{task.start_date_str}}</td>
+                      <td></td><td></td><td></td>
+                    </tr>
+                    <tr class="text-gray-700 dark:text-gray-400 task animateDelete">
+                      <td  class="px-4  py-3">
+                        <div class="flex items-center text-sm">
+                          <div class="shadow-xl border rounded-full w-8 h-8 mr-3 rounded-full"></div>
+
+                          <div>
+                            <p class="font-semibold">{{task.name}}</p>
+                            <p style="max-width:170px" class="text-xs  text-gray-600 dark:text-gray-400">{% for activity in task.activities.all %}{{activity}} {% endfor %}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-4 py-3 text-sm">{{task.start_time.time}} - {{task.end_time.time}}  </td>
+                      <td class="px-4 py-3 text-sm">{{task.duration}}</td>
+
+                      <td class="px-4 py-3  text-sm">
+                        {% if task.square.is_important %}
+                        <span
+                          class="px-2 py-1 mr-2 font-bold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
+                        >
+                          I
+                        </span>
+                        {% endif %}
+                        {% if task.square.is_urgent %}
+                        <span
+                          class="px-2 py-1  font-bold leading-tight text-red-700 bg-red-100 rounded-full dark:bg-green-700 dark:text-green-100"
+                        >
+                          U
+                        </span>
+                        {% endif%}
+                      </td>
+                      <td class="px-4 py-3">
+                        <div class="flex items-center space-x-4 text-sm">
+                          <button
+                            class="playButton flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                            aria-label="Play"
+                          >
+                            <svg
+                              class="w-5 h-5"
+                              aria-hidden="true"
+                              fill="currentColor"
+                              viewBox="0 0 16 16"
+                            >
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"/>
+
+                            </svg>
+                          </button>
+                          <button
+                            class="deleteScheduledTask flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                            aria-label="Delete"
+                          >
+                            <svg
+                              class="w-5 h-5"
+                              aria-hidden="true"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                clip-rule="evenodd"
+                              ></path>
+                            </svg>
+                          </button>
+                        </div>
+                      </td>
+                      <td style="display:none">{{task.id}}</td>
+                      <td style="display:none">{{task.square.is_important}}</td>
+                      <td style="display:none">{{task.square.is_urgent}}</td>
+                      <td style="display:none">{{task.start_time_str}}</td>
+                      <td style="display:none">{{task.start_date_str}}</td>
+
+                    </tr>
+                    {% endfor %}
+
+
+                  </tbody>
+                </table>
+              </div>
+              <!-- This example requires Tailwind CSS v2.0+ -->
+<div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+  <div>
+    <p class="text-sm text-gray-700">
+      Page
+      <span class="font-medium">{{tasks.number}}</span>
+      of
+      <span class="font-medium">{{tasks.paginator.num_pages}}</span>
+    </p>
+  </div>
+  <div class=" sm:flex-1 sm:flex sm:items-center sm:justify-between">
+    <div>
+      <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+        {% if tasks.has_previous %}
+        <a href="?page={{tasks.previous_page_number}}" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+          <!-- Heroicon name: solid/chevron-left -->
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg><span class="sr-only">Previous</span>
+        </a>
+        {% endif %}
+        {% if tasks.has_next %}
+        <a href="?page={{tasks.next_page_number}}" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+          <span class="sr-only">Next</span>
+          <!-- Heroicon name: solid/chevron-right -->
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+          </svg>
+        </a>
+        {% endif %}
+      </nav>
+    </div>
+  </div>
+</div>
+
+            </div>
+            
+          </div>
+          <table style="display:none">
+            <tr id="scheduledTaskLayout" class="text-gray-700 dark:text-gray-400 animateDelete">
+              <td class="px-4 py-3">
+                <div class="flex items-center text-sm">
+                  <div class="border shadow-xl rounded-full w-8 h-8 mr-3 rounded-full"></div>
+
+                  <div>
+                    <p class="font-semibold"></p>
+                    <p style="max-width:130px" class="text-xs  text-gray-600 dark:text-gray-400"></p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-4 py-3 text-sm"></td>
+              <td class="px-4 py-3 text-sm"></td>
+              
+              <td class="px-4 py-3 text-sm">
+                <span
+                  class="px-2 py-1 mr-2 font-bold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
+                >
+                  I
+                </span>
+                <span
+                  class="px-2 py-1  font-bold leading-tight text-red-700 bg-red-100 rounded-full dark:bg-green-700 dark:text-green-100"
+                >
+                  U
+                </span>
+              </td>
+              <td class="px-4 py-3">
+                <div class="flex items-center space-x-4 text-sm">
+                  <button
+                    class="playButton flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                    aria-label="Play"
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      aria-hidden="true"
+                      fill="currentColor"
+                      viewBox="0 0 16 16"
+                    >
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"/>
+
+                    </svg>
+                  </button>
+                  <button
+                    class="deleteScheduledTask flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                    aria-label="Delete"
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      aria-hidden="true"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+              <td style="display:none"></td>
+              <td style="display:none"></td>
+              <td style="display:none"></td>
+              <td style="display:none"></td>
+              <td style="display:none"></td>
+            </tr>
+            <tr id="startDateLayout" class="startDate text-gray-700 dark:text-gray-400 pl-20">
+              <td style="" class="font-semibold py-3 px-10">date</td>
+              <td></td><td></td><td></td><td></td>
+            </tr>
+          </table>
+          <template id="activityTemplate">
+            <li class="flex">
+              <label class="flex ml-2 items-center dark:text-gray-400">
+                <input
+                  checked
+                  type="checkbox"
+                  class="text-purple-600 activity form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                />
+                <span  class="ml-2 activityName">
+                </span>
+              </label>
+            </li>
+          </template>
+          <template id="formActivityTemplate">
+            <li class="flex">
+              <label class="flex ml-2 formActivityItem items-center dark:text-gray-400">
+                <input
+                  type="checkbox"
+                  class="text-purple-600 formActivity form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                />
+                <span  class="ml-2 formActivityName">
+                </span>
+              </label>
+            </li>
+          </template>
+          <template id="scheduleLinkTemplate">
+            <li style="margin:0" class="scheduleItem flex">
+              <a href="#" class="scheduleName w-full text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Account settings</a>
+            </li>
+          </template>
+        </main>
+        
+      </div>
+    </div>
+
+
+    <!-- New  Unscheduled task Modal backdrop. This what you want to place close to the closing body tag -->
+    <div
+      x-show="isModalOpen"
+      x-transition:enter="transition ease-out duration-150"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-150"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+      class="fixed inset-0 z-30 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"
+    >
+      <!-- Modal -->
+      <div
+        x-show="isModalOpen"
+        x-transition:enter="transition ease-out duration-150"
+        x-transition:enter-start="opacity-0 transform translate-y-1/2"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0  transform translate-y-1/2"
+        @click.away="closeModal"
+        @keydown.escape="closeModal"
+        class="w-full modal px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4 sm:max-w-xl"
+        role="dialog"
+        id="modal"
+      >
+        
+        <!-- Modal body -->
+        <div class="mt-4 mb-6">
+          <!-- Modal title -->
+          <h4
+              class="mb-2 text-lg font-semibold text-gray-600 dark:text-gray-300"
+            >
+              New Timelog
+          </h4>
+          <p class="text-sm" style="color:#dc2626" id="newUnscheduledTaskError"></p>
+          
+          <form class="mt-2">
+            <label class="block text-sm">
+              <span class="text-gray-700 dark:text-gray-400">Task</span>
+              <input
+                maxlength="63"
+                id="unscheduledTaskTitle"
+                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                placeholder="Revising class notes."
+              />
+            </label>
+            <div class="mt-2 text-sm">
+              <span class="text-gray-700 dark:text-gray-400">
+                Task Status
+              </span>
+              <div class="mt-2">
+                <label
+                  class="inline-flex items-center text-gray-600 dark:text-gray-400"
+                >
+                  <input
+                    type="checkbox"
+                    class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                    id="isImportant"
+                  />
+                  <span class="ml-2">Is important</span>
+                </label>
+                <label
+                  class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400"
+                >
+                  <input
+                    type="checkbox"
+                    class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                    id="isUrgent"
+                  />
+                  <span class="ml-2">Is Urgent</span>
+                </label>
+              </div>
+              
+            </div>
+            <div class="mt-2 text-sm">
+              <span class="text-gray-700 dark:text-gray-400 mr-4">
+                Start time 
+              </span>
+              <div class="mt-2">    
+                <label class="inline-flex items-center  text-gray-600 dark:text-gray-400" >
+                  <input
+                    id="startTime"
+                    type="time"
+                    class="block  mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                  />
+                </label>
+
+                <label class="inline-flex items-center  text-gray-600 dark:text-gray-400" >
+                  <input
+                    id="startDate"
+                    type="date"
+                    class="block  mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                  />
+                </label>        
+              </div>              
+            </div>
+            <div class="mt-2 text-sm">
+              <span class="text-gray-700 dark:text-gray-400 ">
+                Duration
+              </span>
+              <div class="mt-2">
+                <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+                  <input
+                    type="number" min="0" max="12" 
+                    class="block mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                    placeholder="hours"
+                    id="hours"
+                  />
+                </label>
+                <label class="inline-flex items-center  text-gray-600 dark:text-gray-400">
+                  <input
+                    type="number" min="0" max="59"
+                    class="block  mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                    placeholder="minutes"
+                    id="minutes"
+                  />
+                </label>            
+              </div>              
+            </div>
+            <div class="mt-4 text-sm">
+              <span class="text-gray-700 dark:text-gray-400">
+                Activities
+              </span>
+              <div style="max-height: 75px; overflow-y:scroll" class="mt-2 rounded-md text-sm border">
+                <ul
+                  style="border-radius:10px"
+                  aria-label="activities"
+                  id="formActivities"
+                >
+                  {% for activity in activities %}
+                    <li class="flex">
+                      <label class="flex ml-2 formActivityItem items-center dark:text-gray-400">
+                        <input
+                          type="checkbox"
+                          class="text-purple-600 activity form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                        />
+                        <span  class="ml-2 activityName">{{activity.name}}</span>
+                      </label>
+                    </li>
+                  {% endfor %}
+                </ul>
+                
+              </div>
+            </div>
+
+            
+          </form>
+
+          
+        </div>
+        <footer
+          class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800"
+        >
+          <button
+            id="closeModalButton"
+            @click="closeModal"
+            class="w-full px-5 py-3 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray"
+          >
+            Close
+          </button>
+          <button
+            id="addScheduledTaskButton"
+            class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+          >
+            Add+
+          </button>
+          
+      </div>
+    </div> 
+  </body>
+</html>

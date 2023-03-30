@@ -1,0 +1,29 @@
+@keyframes hide {
+    0% {
+        height: 100%;
+        line-height: 100%;
+    }
+    100% {
+        height: 0px;
+        line-height: 0px;
+        padding: 0px;
+        margin-bottom: 0px;
+    }
+}
+
+.animateDelete {
+    animation-name: hide;
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+    animation-play-state: paused;
+}
+
+#navTask:focus {
+    border: none;
+    outline: none;
+    background-color: black;
+}
+
+.scheduleItem:hover {
+    background-color: #eee;
+}

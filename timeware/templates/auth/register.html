@@ -1,0 +1,148 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.98.0">
+    <title>Hourpad</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/modals/">
+
+    
+
+    
+
+    <link href="{% static 'auth/style_default1.css' %} "rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="{% static 'auth/style.css' %}" rel="stylesheet">
+  </head>
+  <body style="background: #edeff3">
+<br>
+    <h1 class="text-center">Hourpad</h1>
+<div class="modal modal-signin position-static d-block  py-2" tabindex="-1" role="dialog" id="modalSignin">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-4 shadow border-0">
+          
+          <h4 class="text-center mt-4 mb-3" style="font-weight: 300">Create new account</h4>
+          <div class="modal-body p-5 pt-0">
+            {% if message %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{message}}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+            <form action="{% url 'register' %}" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-floating mb-3">
+                      <input type="text" name="first" class="form-control rounded-3" minlength="2" maxlenght="10" placeholder="p" required>
+                      <label for="floatingInput">First name</label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-floating mb-3">
+                      <input type="text" name="last" class="form-control rounded-3" minlength="2" maxlenght="10" placeholder="p" required>
+                      <label for="floatingInput">Surname</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="email" name="email" class="form-control rounded-3" maxlenght="63" minlength="12" placeholder="p" required>
+                  <label for="floatingInput">Email address</label>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-floating mb-3">
+                      <input type="password" name="password" class="form-control rounded-3" minlength="6" maxlenght"24" placeholder="p" required>
+                      <label for="floatingPassword">Password</label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-floating mb-3">
+                      <input type="password" name="confirmation" class="form-control rounded-3" minlength="6" maxlenght"24" placeholder="p" required>
+                      <label for="floatingPassword">Confirmation</label>
+                    </div>
+                  </div>
+                </div>
+                <small class="text-muted">By clicking Sign up, you agree to our <a href="#" class="link">terms </a>.</small>
+                <button class="w-100 mt-2 btn btn-lg rounded-3 btn-success" type="submit">Sign Up</button>
+                
+                
+            </form>
+          </div>
+        </div>
+      </div>
+</div>
+<div class="container fixed-bottom">
+  <footer class="">
+    <ul class="nav justify-content-center ">
+      <li class="nav-item"><a href="{% url 'index' %}" class="nav-link px-2 text-muted">Home</a></li>
+    </ul>
+    <p class="text-center text-muted">Hourpad &copy; 2022</p>
+  </footer>
+</div>
+
+<script src="{% static 'auth/bootstrap_default.js' %}">
+
+      
+  </body>
+</html>
